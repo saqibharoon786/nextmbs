@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import Link from "next/link";
 import {
   Activity,
   FileText,
@@ -19,10 +18,10 @@ import {
   Mail,
 } from "lucide-react";
 
-import Navbar from "../components/ui/Navbar";
-import Footer from "../components/ui/Footer";
-import { getServiceBySlug, services } from "../data/services";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "../data/contact";
+import Navbar from "@/components/ui/Navbar";
+import Footer from "@/components/ui/Footer";
+import { services } from "@/data/services";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "@/data/contact";
 
 const iconMap = {
   Activity,
@@ -39,20 +38,12 @@ const iconMap = {
   BarChart3,
 };
 
-const ServicePage = () => {
-  const { slug } = useParams();
-  const service = getServiceBySlug(slug);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" });
-  }, [slug]);
-
-  if (!service) {
-    return <Navigate to="/" replace />;
-  }
-
+export default function ServicePage({ service }) {
   const Icon = iconMap[service.icon] || Activity;
   const related = services.filter((item) => item.slug !== service.slug).slice(0, 3);
+  const titleParts = service.title.split(" ");
+  const lastWord = titleParts.pop();
+  const titleStart = titleParts.join(" ");
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#f4faff] pt-4">
@@ -73,8 +64,8 @@ const ServicePage = () => {
           </div>
 
           <h1 className="text-4xl font-extrabold leading-tight text-[#092957] sm:text-5xl">
-            {service.title.split(" ").slice(0, -1).join(" ")}{" "}
-            <span className="text-[#ed174c]">{service.title.split(" ").slice(-1)}</span>
+            {titleStart ? `${titleStart} ` : ""}
+            <span className="text-[#ed174c]">{lastWord}</span>
           </h1>
 
           <p className="mx-auto mt-5 max-w-[640px] text-base leading-8 text-[#71839e]">
@@ -83,7 +74,7 @@ const ServicePage = () => {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              to="/#contact"
+              href="/#contact"
               className="inline-flex items-center gap-2 rounded-full bg-[#ed174c] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#d91243]"
             >
               Request this service
@@ -158,7 +149,7 @@ const ServicePage = () => {
             </div>
             <div className="flex flex-col gap-3 sm:items-end">
               <Link
-                to="/#contact"
+                href="/#contact"
                 className="inline-flex items-center gap-2 rounded-full bg-[#ed174c] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#d91243]"
               >
                 Open contact form
@@ -185,7 +176,7 @@ const ServicePage = () => {
               return (
                 <Link
                   key={item.slug}
-                  to={`/services/${item.slug}`}
+                  href={`/services/${item.slug}`}
                   className="rounded-[24px] border border-[#e5eef7] bg-white/80 p-5 transition hover:-translate-y-0.5 hover:shadow-md"
                 >
                   <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#dff3ff]">
@@ -203,6 +194,4 @@ const ServicePage = () => {
       <Footer />
     </div>
   );
-};
-
-export default ServicePage;
+}

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import {
   ArrowUpRight,
   HeartPulse,
@@ -9,15 +9,13 @@ import {
 import { FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-import nextmbsLogo from "../../assets/images/nextmbs-logo.png";
-import leftImage from "../../assets/images/lefticon.png";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "../../data/contact";
 
 const Footer = () => {
   return (
     <footer className="relative overflow-hidden bg-[#f4faff] text-[#0b3b66]">
       <img
-        src={leftImage}
+        src="/images/lefticon.png"
         alt=""
         className="pointer-events-none absolute bottom-40 right-[-50px] hidden w-[230px] opacity-80 lg:block"
       />
@@ -31,7 +29,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div className="max-w-[330px]">
             <img
-              src={nextmbsLogo}
+              src="/images/nextmbs-logo.png"
               alt="NEXTMBS Medical Billing Solutions"
               className="h-auto w-[220px] max-w-full object-contain object-left"
             />
@@ -84,16 +82,16 @@ const Footer = () => {
 
             <ul className="space-y-4 text-sm text-[#52708c]">
               <li>
-                <Link to="/" className="transition hover:text-[#168be8]">Home</Link>
+                <Link href="/" className="transition hover:text-[#168be8]">Home</Link>
               </li>
               <li>
-                <Link to="/#about" className="transition hover:text-[#168be8]">About Us</Link>
+                <Link href="/#about" className="transition hover:text-[#168be8]">About Us</Link>
               </li>
               <li>
-                <Link to="/#services" className="transition hover:text-[#168be8]">Our Services</Link>
+                <Link href="/#services" className="transition hover:text-[#168be8]">Our Services</Link>
               </li>
               <li>
-                <Link to="/#contact" className="transition hover:text-[#168be8]">Contact Us</Link>
+                <Link href="/#contact" className="transition hover:text-[#168be8]">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -108,27 +106,27 @@ const Footer = () => {
 
             <ul className="space-y-4 text-sm text-[#52708c]">
               <li>
-                <Link to="/services/medical-billing" className="transition hover:text-[#168be8]">
+                <Link href="/services/medical-billing" className="transition hover:text-[#168be8]">
                   Medical Billing
                 </Link>
               </li>
               <li>
-                <Link to="/services/medical-coding" className="transition hover:text-[#168be8]">
+                <Link href="/services/medical-coding" className="transition hover:text-[#168be8]">
                   Medical Coding
                 </Link>
               </li>
               <li>
-                <Link to="/services/credentialing" className="transition hover:text-[#168be8]">
+                <Link href="/services/credentialing" className="transition hover:text-[#168be8]">
                   Credentialing
                 </Link>
               </li>
               <li>
-                <Link to="/services/denial-management" className="transition hover:text-[#168be8]">
+                <Link href="/services/denial-management" className="transition hover:text-[#168be8]">
                   Denial Management
                 </Link>
               </li>
               <li>
-                <Link to="/services/revenue-cycle-management" className="transition hover:text-[#168be8]">
+                <Link href="/services/revenue-cycle-management" className="transition hover:text-[#168be8]">
                   Revenue Cycle Management
                 </Link>
               </li>

@@ -1,36 +1,11 @@
+"use client";
+
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "../../data/contact";
-
-import hipaaIcon from "../../assets/images/hipaa-icon.png";
-import reimbursementsIcon from "../../assets/images/reimbursements-icon.png";
-import revenueCycleIcon from "../../assets/images/revenue-cycle-icon.png";
-
-import medheaveMain from "../../assets/images/medheave_main.png";
-import heroBg from "../../assets/images/hero-bg.png";
-
-import ourImpact from "../../assets/images/secondimage.png";
-import leftImage from "../../assets/images/lefticon.png";
-import rightImage from "../../assets/images/righticon.png";
-import card1S3 from "../../assets/images/card_1S3.png";
-import card2S3 from "../../assets/images/card_2S3.png";
-import card3S3 from "../../assets/images/card_3S3.png";
-import card4S3 from "../../assets/images/card_4S3.png";
-import card5S3 from "../../assets/images/card_5S3.png";
-import card6S3 from "../../assets/images/card_6S3.png";
-import card7S3 from "../../assets/images/card_7S3.png";
-import card8S3 from "../../assets/images/card_8S3.png";
-import card9S3 from "../../assets/images/card_9S3.png";
-import card1 from "../../assets/images/card_1.png";
-import card2 from "../../assets/images/card_2.png";
-import card3 from "../../assets/images/card_3.png";
-import card4 from "../../assets/images/card_4.png";
-import card5 from "../../assets/images/card_5.png";
-import card6 from "../../assets/images/card_6.png";
-import computer_illustration from "../../assets/images/computer_illustration2.png"
-
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "@/data/contact";
 import {
   UserRound,
   Code2,
@@ -42,7 +17,6 @@ import {
   ArrowDown,
   Activity,
   HeartCrack,
-
   Mail,
   Phone,
   Quote,
@@ -60,8 +34,33 @@ import {
   Building2,
 } from "lucide-react";
 
+const hipaaIcon = "/images/hipaa-icon.png";
+const reimbursementsIcon = "/images/reimbursements-icon.png";
+const revenueCycleIcon = "/images/revenue-cycle-icon.png";
+const medheaveMain = "/images/medheave_main.png";
+const heroBg = "/images/hero-bg.png";
+const ourImpact = "/images/secondimage.png";
+const leftImage = "/images/lefticon.png";
+const rightImage = "/images/righticon.png";
+const card1S3 = "/images/card_1S3.png";
+const card2S3 = "/images/card_2S3.png";
+const card3S3 = "/images/card_3S3.png";
+const card4S3 = "/images/card_4S3.png";
+const card5S3 = "/images/card_5S3.png";
+const card6S3 = "/images/card_6S3.png";
+const card7S3 = "/images/card_7S3.png";
+const card8S3 = "/images/card_8S3.png";
+const card9S3 = "/images/card_9S3.png";
+const card1 = "/images/card_1.png";
+const card2 = "/images/card_2.png";
+const card3 = "/images/card_3.png";
+const card4 = "/images/card_4.png";
+const card5 = "/images/card_5.png";
+const card6 = "/images/card_6.png";
+const computer_illustration = "/images/computer_illustration2.png";
+
 const MainScreen = () => {
-  const location = useLocation();
+  const pathname = usePathname();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -127,12 +126,13 @@ const MainScreen = () => {
   };
 
   useEffect(() => {
-    if (!location.hash) return;
+    const hash = window.location.hash;
+    if (!hash) return;
     const timer = setTimeout(() => {
-      document.querySelector(location.hash)?.scrollIntoView({ behavior: "smooth" });
+      document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
     }, 80);
     return () => clearTimeout(timer);
-  }, [location.hash]);
+  }, [pathname]);
 
   return (
     <div className="relative  pt-4">
@@ -874,7 +874,7 @@ const MainScreen = () => {
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
 
   {/* CARD 1 — MEDICAL BILLING */}
-  <Link to="/services/medical-billing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/medical-billing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card1S3} alt="Medical Billing" className="w-full h-auto object-contain" />
     </div>
@@ -895,7 +895,7 @@ const MainScreen = () => {
 
 
   {/* CARD 2 — MEDICAL CODING */}
-  <Link to="/services/medical-coding" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/medical-coding" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card2S3} alt="Medical Coding" className="w-full h-auto object-contain" />
     </div>
@@ -916,7 +916,7 @@ const MainScreen = () => {
 
 
   {/* CARD 3 — MEDICAL CREDENTIALING */}
-  <Link to="/services/credentialing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/credentialing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card3S3} alt="Medical Credentialing" className="w-full h-auto object-contain" />
     </div>
@@ -937,7 +937,7 @@ const MainScreen = () => {
 
 
   {/* CARD 4 — PRIOR AUTHORIZATION */}
-  <Link to="/services/prior-authorization" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/prior-authorization" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card4S3} alt="Prior Authorization" className="w-full h-auto object-contain" />
     </div>
@@ -958,7 +958,7 @@ const MainScreen = () => {
 
 
   {/* CARD 5 — WORKER'S COMP */}
-  <Link to="/services/claims-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/claims-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card5S3} alt="Workers Compensation and No Fault Billing" className="w-full h-auto object-contain" />
     </div>
@@ -981,7 +981,7 @@ const MainScreen = () => {
 
 
   {/* CARD 6 — DENIAL MANAGEMENT */}
-  <Link to="/services/denial-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/denial-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card6S3} alt="Denial Management" className="w-full h-auto object-contain" />
     </div>
@@ -1002,7 +1002,7 @@ const MainScreen = () => {
 
 
   {/* CARD 7 — PATIENT BILLING */}
-  <Link to="/services/medical-billing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/medical-billing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card7S3} alt="Patient Billing" className="w-full h-auto object-contain" />
     </div>
@@ -1023,7 +1023,7 @@ const MainScreen = () => {
 
 
   {/* CARD 8 — BETTER PROCESSES */}
-  <Link to="/services/revenue-cycle-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
+  <Link href="/services/revenue-cycle-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card8S3} alt="Better Processes Healthier Revenue" className="w-full h-auto object-contain" />
     </div>

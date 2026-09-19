@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ChevronDown, ArrowRight, Menu } from "lucide-react";
-import navbarlogo from "../../assets/images/nextmbs-logo.png";
 import { services } from "../../data/services";
 import {
  
@@ -63,9 +62,9 @@ const Navbar = () => {
     <div className="h-[68px] w-[70%] lg:w-[70%] md:w-[85%] sm:w-[90%] w-[94%] mx-auto flex items-center rounded-3xl bg-white justify-between px-3 sm:px-5 shadow-sm">
 
       {/* Logo */}
-      <Link to="/" className="flex shrink-0 items-center">
+      <Link href="/" className="flex shrink-0 items-center">
         <img
-          src={navbarlogo}
+          src="/images/nextmbs-logo.png"
           alt="NEXTMBS Medical Billing Solutions"
           className="h-[58px] w-auto max-w-[150px] object-contain object-left sm:h-[62px] sm:max-w-[170px]"
         />
@@ -78,7 +77,7 @@ const Navbar = () => {
 
   {/* Services */}
   <Link
-    to="/#services"
+    href="/#services"
     className="flex items-center gap-1 whitespace-nowrap"
   >
     Services
@@ -131,7 +130,7 @@ const Navbar = () => {
         </div>
 
         <Link
-          to="/#services"
+          href="/#services"
           className="
             text-sm
             font-semibold
@@ -159,7 +158,7 @@ const Navbar = () => {
           return (
             <Link
               key={service.slug}
-              to={`/services/${service.slug}`}
+              href={`/services/${service.slug}`}
               className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
             >
               <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -184,7 +183,7 @@ const Navbar = () => {
       <div className="mt-4 pt-4 border-t border-gray-100">
 
         <Link
-          to="/#services"
+          href="/#services"
           className="
             text-sm
             font-semibold
@@ -1554,7 +1553,7 @@ const Navbar = () => {
 
       {/* Contact Us */}
       <Link
-        to="/#contact"
+        href="/#contact"
         className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
       >
         <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -1575,7 +1574,7 @@ const Navbar = () => {
 
       {/* Request Demo */}
       <Link
-        to="/#contact"
+        href="/#contact"
         className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
       >
         <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -1596,7 +1595,7 @@ const Navbar = () => {
 
       {/* Support */}
       <Link
-        to="/#contact"
+        href="/#contact"
         className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
       >
         <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -1625,7 +1624,7 @@ const Navbar = () => {
       {/* Contact Button - Desktop */}
       <div className="hidden lg:block">
         <Link
-          to="/#contact"
+          href="/#contact"
           className="
             hidden lg:flex
             bg-red-500
