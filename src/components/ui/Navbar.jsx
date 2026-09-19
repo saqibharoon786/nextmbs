@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { ChevronDown, ArrowRight, Menu } from "lucide-react";
-import navbarlogo from "../../assets/images/navbarlogo.png";
+import navbarlogo from "../../assets/images/nextmbs-logo.png";
+import { services } from "../../data/services";
 import {
  
  FileText,
@@ -41,18 +43,33 @@ MessageCircle,
 
 } from "lucide-react";
 
+const serviceIcons = {
+  Activity,
+  FileText,
+  ClipboardCheck,
+  ShieldCheck,
+  UserCheck,
+  BadgeCheck,
+  Clock,
+  FileCheck,
+  CreditCard,
+  TrendingUp,
+  AlertCircle,
+  BarChart3,
+};
+
 const Navbar = () => {
   return (
-    <div className="h-[50px] w-[70%] lg:w-[70%] md:w-[85%] sm:w-[90%] w-[94%] mx-auto flex items-center rounded-3xl bg-white justify-between px-4 sm:px-6">
+    <div className="h-[68px] w-[70%] lg:w-[70%] md:w-[85%] sm:w-[90%] w-[94%] mx-auto flex items-center rounded-3xl bg-white justify-between px-3 sm:px-5 shadow-sm">
 
       {/* Logo */}
-      <div>
+      <Link to="/" className="flex shrink-0 items-center">
         <img
-  src={navbarlogo}
-  alt="Logo"
-  className="h-20 w-20 object-contain "
-/>
-      </div>
+          src={navbarlogo}
+          alt="NEXTMBS Medical Billing Solutions"
+          className="h-[58px] w-auto max-w-[150px] object-contain object-left sm:h-[62px] sm:max-w-[170px]"
+        />
+      </Link>
 
       {/* Navigation - Desktop */}
       <div className="hidden lg:flex items-center gap-4 text-blue-900 font-semibold">
@@ -60,13 +77,13 @@ const Navbar = () => {
    <div className="relative group">
 
   {/* Services */}
-  <a
-    href="#services"
+  <Link
+    to="/#services"
     className="flex items-center gap-1 whitespace-nowrap"
   >
     Services
     <ChevronDown size={16} strokeWidth={2.5} />
-  </a>
+  </Link>
 
 
   {/* Services Mega Menu */}
@@ -76,7 +93,7 @@ const Navbar = () => {
       left-1/2
       -translate-x-1/2
       top-full
-      pt-4
+      p-2
       hidden
       group-hover:block
       z-50
@@ -113,8 +130,8 @@ const Navbar = () => {
           </p>
         </div>
 
-        <a
-          href="#services"
+        <Link
+          to="/#services"
           className="
             text-sm
             font-semibold
@@ -128,7 +145,7 @@ const Navbar = () => {
         >
           View all services
           <ArrowRight size={16} />
-        </a>
+        </Link>
 
       </div>
 
@@ -137,245 +154,28 @@ const Navbar = () => {
       <div className="grid grid-cols-2 gap-x-4 gap-y-1">
 
 
-        {/* 1. Revenue Cycle Management */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <Activity size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Revenue Cycle Management
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              End-to-end RCM operations
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 2. Medical Billing Services */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <FileText size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Medical Billing Services
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Claims from submit to payment
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 3. Medical Coding */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <ClipboardCheck size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Medical Coding
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              CPT, ICD-10 & HCPCS accuracy
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 4. Credentialing Services */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <ShieldCheck size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Credentialing Services
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Payer enrollment & CAQH
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 5. Provider Enrollment */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <UserCheck size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Provider Enrollment
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              New provider onboarding
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 6. Eligibility Verification */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <BadgeCheck size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Eligibility Verification
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Benefits checked before visits
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 7. Prior Authorization */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <Clock size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Prior Authorization
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Fast auth submission & follow-up
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 8. Claims Management */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <FileCheck size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Claims Management
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Scrub, submit, track, resolve
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 9. Payment Posting */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <CreditCard size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Payment Posting
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Same-day ERA/EOB posting
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 10. AR Recovery */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <TrendingUp size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              AR Recovery
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Aged AR recovery programs
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 11. Denial Management */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <AlertCircle size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Denial Management
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Appeals with root-cause fixes
-            </p>
-          </div>
-
-        </div>
-
-
-        {/* 12. Accounts Receivable Follow-up */}
-        <div className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition">
-
-          <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
-            <BarChart3 size={20} className="text-blue-900" />
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-blue-950 text-sm">
-              Accounts Receivable Follow-up
-            </h4>
-
-            <p className="text-xs text-gray-500">
-              Dedicated AR follow-up
-            </p>
-          </div>
-
-        </div>
-
+        {services.map((service) => {
+          const Icon = serviceIcons[service.icon];
+          return (
+            <Link
+              key={service.slug}
+              to={`/services/${service.slug}`}
+              className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
+            >
+              <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
+                <Icon size={20} className="text-blue-900" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-blue-950 text-sm">
+                  {service.title}
+                </h4>
+                <p className="text-xs text-gray-500">
+                  {service.short}
+                </p>
+              </div>
+            </Link>
+          );
+        })}
 
       </div>
 
@@ -383,8 +183,8 @@ const Navbar = () => {
       {/* Bottom Link */}
       <div className="mt-4 pt-4 border-t border-gray-100">
 
-        <a
-          href="#services"
+        <Link
+          to="/#services"
           className="
             text-sm
             font-semibold
@@ -394,7 +194,7 @@ const Navbar = () => {
           "
         >
           View all services →
-        </a>
+        </Link>
 
       </div>
 
@@ -423,7 +223,7 @@ const Navbar = () => {
       left-1/2
       -translate-x-1/2
       top-full
-      pt-4
+      pt-2
       hidden
       group-hover:block
       z-50
@@ -800,7 +600,7 @@ const Navbar = () => {
       left-1/2
       -translate-x-1/2
       top-full
-      pt-4
+      pt-2
       hidden
       group-hover:block
       z-50
@@ -844,7 +644,7 @@ const Navbar = () => {
           flex
           items-center
           gap-4
-          p-4
+          p-2
           rounded-xl
           bg-blue-50
           hover:bg-blue-100
@@ -1075,7 +875,7 @@ const Navbar = () => {
       left-1/2
       -translate-x-1/2
       top-full
-      pt-4
+      pt-2
       hidden
       group-hover:block
       z-50
@@ -1444,7 +1244,7 @@ const Navbar = () => {
       left-1/2
       -translate-x-1/2
       top-full
-      pt-4
+      pt-2
       hidden
       group-hover:block
       z-50
@@ -1488,7 +1288,7 @@ const Navbar = () => {
 
         {/* About Us */}
         <a
-          href="#about"
+          href="/#about"
           className="
             flex
             gap-3
@@ -1653,7 +1453,7 @@ const Navbar = () => {
 
         {/* Contact Us */}
         <a
-          href="#contact"
+          href="/#contact"
           className="
             flex
             gap-3
@@ -1694,7 +1494,7 @@ const Navbar = () => {
         </p>
 
         <a
-          href="#about"
+          href="/#about"
           className="
             text-sm
             font-semibold
@@ -1718,8 +1518,8 @@ const Navbar = () => {
 
   {/* Contact */}
   <a
-    href="#contact"
-    className="flex items-center gap-1 whitespace-nowrap"
+    href="/#contact"
+    className=" flex items-center gap-1 whitespace-nowrap"
   >
     Contact
     <ChevronDown size={16} strokeWidth={2.5} />
@@ -1733,7 +1533,7 @@ const Navbar = () => {
       left-1/2
       -translate-x-1/2
       top-full
-      pt-4
+      pt-2
       hidden
       group-hover:block
       z-50
@@ -1748,13 +1548,13 @@ const Navbar = () => {
         border-gray-100
         rounded-2xl
         shadow-2xl
-        p-4
+        p-2
       "
     >
 
       {/* Contact Us */}
-      <a
-        href="#contact"
+      <Link
+        to="/#contact"
         className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
       >
         <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -1770,12 +1570,12 @@ const Navbar = () => {
             Talk to our healthcare billing team
           </p>
         </div>
-      </a>
+      </Link>
 
 
       {/* Request Demo */}
-      <a
-        href="#demo"
+      <Link
+        to="/#contact"
         className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
       >
         <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -1791,12 +1591,12 @@ const Navbar = () => {
             See how Med-Heave can help your practice
           </p>
         </div>
-      </a>
+      </Link>
 
 
       {/* Support */}
-      <a
-        href="#support"
+      <Link
+        to="/#contact"
         className="flex gap-3 p-3 rounded-xl hover:bg-blue-50 transition"
       >
         <div className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -1812,7 +1612,7 @@ const Navbar = () => {
             Get help with your billing needs
           </p>
         </div>
-      </a>
+      </Link>
 
     </div>
 
@@ -1824,30 +1624,32 @@ const Navbar = () => {
 
       {/* Contact Button - Desktop */}
       <div className="hidden lg:block">
-        <button
-  className="
-    hidden lg:flex
-    bg-red-500 hover:bg-red-600
-    rounded-full
-    text-white
-    px-2 sm:px-3
-    py-1.5
-    items-center
-    gap-1 sm:gap-2
-    text-sm sm:text-base
-    whitespace-nowrap
-  "
->
-  Contact Us
+        <Link
+          to="/#contact"
+          className="
+            hidden lg:flex
+            bg-red-500
+            hover:bg-red-600
+            rounded-full
+            text-white
+            px-2 sm:px-3
+            py-1.5
+            items-center
+            gap-1 sm:gap-2
+            text-sm sm:text-base
+            whitespace-nowrap
+          "
+        >
+          Contact Us
 
-  <span className="bg-white rounded-full h-6 w-6 sm:h-7 sm:w-7 flex items-center justify-center">
-    <ArrowRight
-      size={15}
-      className="sm:w-[17px] sm:h-[17px] text-black"
-      strokeWidth={1.5}
-    />
-  </span>
-</button>
+          <span className="bg-white rounded-full h-6 w-6 sm:h-7 sm:w-7 flex items-center justify-center">
+            <ArrowRight
+              size={15}
+              className="sm:w-[17px] sm:h-[17px] text-black"
+              strokeWidth={1.5}
+            />
+          </span>
+        </Link>
       </div>
 
       {/* Mobile Menu */}

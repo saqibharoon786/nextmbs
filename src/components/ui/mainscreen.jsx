@@ -1,4 +1,8 @@
+import { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from "../../data/contact";
 
 import hipaaIcon from "../../assets/images/hipaa-icon.png";
 import reimbursementsIcon from "../../assets/images/reimbursements-icon.png";
@@ -39,16 +43,97 @@ import {
   Activity,
   HeartCrack,
 
-  ArrowUpRight,
-  MapPin,
   Mail,
   Phone,
-  HeartPulse,
+  Quote,
+  Star,
+  CheckCircle2,
+  Clock3,
+  TrendingUp,
+  Users,
+  Shield,
+  FileCheck,
+  ClipboardCheck,
+  Stethoscope,
+  Send,
+  User,
+  Building2,
 } from "lucide-react";
-import { FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 
 const MainScreen = () => {
+  const location = useLocation();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    practice: "",
+    service: "Medical Billing",
+    message: "",
+  });
+  const [formStatus, setFormStatus] = useState("idle");
+  const [formError, setFormError] = useState("");
+
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    setFormStatus("sending");
+    setFormError("");
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          practice: formData.practice,
+          service: formData.service,
+          message: formData.message,
+          _replyto: formData.email,
+          _subject: `NEXTMBS website inquiry from ${formData.name}`,
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || data.success === "false" || data.success === false) {
+        throw new Error(data.message || "Unable to send your message.");
+      }
+
+      setFormStatus("success");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        practice: "",
+        service: "Medical Billing",
+        message: "",
+      });
+    } catch (error) {
+      setFormStatus("error");
+      setFormError(
+        error.message || `Something went wrong. Please email ${CONTACT_EMAIL}.`
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (!location.hash) return;
+    const timer = setTimeout(() => {
+      document.querySelector(location.hash)?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+    return () => clearTimeout(timer);
+  }, [location.hash]);
+
   return (
     <div className="relative  pt-4">
        {/* Navbar */}
@@ -327,7 +412,7 @@ const MainScreen = () => {
     ABOUT US SECTION
 ====================================================== */}
 
-<section className="relative w-full overflow-hidden bg-[#f4faff] py-20">
+<section id="about" className="relative w-full overflow-hidden bg-[#f4faff] py-20">
 
   {/* Background glows */}
   <div className="pointer-events-none absolute inset-0 z-0">
@@ -400,7 +485,7 @@ const MainScreen = () => {
     MEDICAL BILLING SERVICES SECTION
 ===================================================== */}
 
-<section className="relative w-full overflow-hidden bg-[#f4faff] px-4 pt-5 pb-14">
+<section id="services" className="relative w-full overflow-hidden bg-[#f4faff] px-4 pt-5 pb-14">
 
   {/* =================================================
       BACKGROUND GLOW
@@ -789,7 +874,7 @@ const MainScreen = () => {
 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
 
   {/* CARD 1 — MEDICAL BILLING */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/medical-billing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card1S3} alt="Medical Billing" className="w-full h-auto object-contain" />
     </div>
@@ -806,11 +891,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 2 — MEDICAL CODING */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/medical-coding" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card2S3} alt="Medical Coding" className="w-full h-auto object-contain" />
     </div>
@@ -827,11 +912,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 3 — MEDICAL CREDENTIALING */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/credentialing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card3S3} alt="Medical Credentialing" className="w-full h-auto object-contain" />
     </div>
@@ -848,11 +933,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 4 — PRIOR AUTHORIZATION */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/prior-authorization" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card4S3} alt="Prior Authorization" className="w-full h-auto object-contain" />
     </div>
@@ -869,11 +954,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 5 — WORKER'S COMP */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/claims-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card5S3} alt="Workers Compensation and No Fault Billing" className="w-full h-auto object-contain" />
     </div>
@@ -892,11 +977,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 6 — DENIAL MANAGEMENT */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/denial-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card6S3} alt="Denial Management" className="w-full h-auto object-contain" />
     </div>
@@ -913,11 +998,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 7 — PATIENT BILLING */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/medical-billing" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card7S3} alt="Patient Billing" className="w-full h-auto object-contain" />
     </div>
@@ -934,11 +1019,11 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 
 
   {/* CARD 8 — BETTER PROCESSES */}
-  <div className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3">
+  <Link to="/services/revenue-cycle-management" className="w-full rounded-[24px] bg-white/70 border border-[#e5eef7] p-4 flex items-center gap-3 hover:shadow-md transition">
     <div className="w-[38%] shrink-0">
       <img src={card8S3} alt="Better Processes Healthier Revenue" className="w-full h-auto object-contain" />
     </div>
@@ -958,7 +1043,7 @@ const MainScreen = () => {
   </div>
 </div>
     </div>
-  </div>
+  </Link>
 </div>
 </div>
 
@@ -967,230 +1052,571 @@ const MainScreen = () => {
 
 
 {/* =====================================================
-    FOOTER SECTION
+    WHY CHOOSE US SECTION
 ====================================================== */}
 
-<footer className="relative overflow-hidden bg-[#f4faff] text-[#0b3b66]">
+<section className="relative w-full overflow-hidden bg-[#f4faff] px-4 py-16 sm:py-20">
 
-  {/* Decorative left image */}
-  <img
-    src={leftImage}
-    alt=""
-    className="pointer-events-none absolute bottom-40 right-[-50px]  hidden w-[230px] opacity-80 lg:block"
-  />
+  <div className="pointer-events-none absolute inset-0 z-0">
+    <div className="absolute left-[-180px] top-[40px] h-[420px] w-[420px] rounded-full bg-[#dff2ff] blur-[100px]" />
+    <div className="absolute right-[-160px] bottom-[-80px] h-[380px] w-[380px] rounded-full bg-[#ffe8ef] blur-[110px]" />
+  </div>
 
-  {/* Soft background glow */}
+  <div className="relative z-10 mx-auto max-w-[1320px]">
+
+    <div className="flex flex-col items-center text-center">
+
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#eee5ff] to-[#e4f3ff] px-4 py-2">
+        <Shield size={17} strokeWidth={2} className="text-[#8b4ed8]" />
+        <span className="text-sm font-semibold text-[#3675c8]">
+          Why Choose Us
+        </span>
+      </div>
+
+      <h2 className="max-w-[720px] text-3xl font-extrabold leading-tight text-[#092957] sm:text-4xl lg:text-[40px]">
+        Billing That Works As Hard As
+        <br />
+        Your{" "}
+        <span className="text-[#ed174c]">Practice</span>.
+      </h2>
+
+      <p className="mt-4 max-w-[680px] text-sm font-medium leading-relaxed text-[#71839e] sm:text-base">
+        Outsource the complexity of medical billing without losing control.
+        We protect your revenue, reduce denials, and keep cash flowing
+        so your team can stay focused on care.
+      </p>
+
+    </div>
+
+    <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+
+      {[
+        {
+          icon: TrendingUp,
+          iconBg: "bg-[#ffe4ec]",
+          iconColor: "text-[#e52c5b]",
+          title: "Higher Collections",
+          text: "Clean claims, faster posting, and tighter follow-up that improve reimbursements across every specialty.",
+        },
+        {
+          icon: FileCheck,
+          iconBg: "bg-[#dff3ff]",
+          iconColor: "text-[#1598df]",
+          title: "Fewer Denials",
+          text: "Coding audits and payer-specific scrubbing catch errors before submission — so fewer claims bounce back.",
+        },
+        {
+          icon: Shield,
+          iconBg: "bg-[#f0e4ff]",
+          iconColor: "text-[#8b45d6]",
+          title: "HIPAA-Secure RCM",
+          text: "Every workflow is built around compliance, encrypted data handling, and protected patient information.",
+        },
+        {
+          icon: Users,
+          iconBg: "bg-[#dcf7f4]",
+          iconColor: "text-[#14a7bd]",
+          title: "Dedicated Billing Team",
+          text: "A specialty-matched team owns your account — not a rotating call center — with clear reporting every month.",
+        },
+      ].map((item) => (
+        <div
+          key={item.title}
+          className="rounded-[24px] border border-[#e5eef7] bg-white/80 p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+        >
+          <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${item.iconBg}`}>
+            <item.icon size={24} strokeWidth={2} className={item.iconColor} />
+          </div>
+          <h3 className="text-lg font-bold text-[#142957]">{item.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#71839e]">{item.text}</p>
+        </div>
+      ))}
+
+    </div>
+
+    <div className="mt-8 grid grid-cols-2 gap-3 rounded-[24px] border border-white bg-gradient-to-r from-[#fff7fa] to-[#f5fbff] px-4 py-6 sm:grid-cols-4 sm:px-8">
+      {[
+        { value: "98%", label: "Clean claim rate" },
+        { value: "30%", label: "Fewer denials" },
+        { value: "15+", label: "Days faster AR" },
+        { value: "24/7", label: "Claim monitoring" },
+      ].map((stat) => (
+        <div key={stat.label} className="text-center">
+          <p className="text-2xl font-extrabold text-[#ed174c] sm:text-3xl">{stat.value}</p>
+          <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#71839e] sm:text-sm">
+            {stat.label}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+</section>
+
+
+
+{/* =====================================================
+    CLAIM TO CASH PROCESS SECTION
+====================================================== */}
+
+<section className="relative w-full overflow-hidden bg-[#f4faff] px-4 pb-16 sm:pb-20">
+
+  <div className="pointer-events-none absolute inset-0">
+    <div className="absolute bottom-0 left-[-200px] h-[300px] w-[500px] rounded-full bg-blue-100/20 blur-3xl" />
+    <div className="absolute top-[-80px] left-1/2 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-blue-100/30 blur-3xl" />
+  </div>
+
+  <div className="relative z-10 mx-auto max-w-[1320px]">
+
+    <div className="flex flex-col items-center text-center">
+
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#eee5ff] to-[#e4f3ff] px-4 py-2">
+        <ClipboardCheck size={17} strokeWidth={2} className="text-[#8b4ed8]" />
+        <span className="text-sm font-semibold text-[#3675c8]">
+          Medical Billing Process
+        </span>
+      </div>
+
+      <h2 className="text-3xl font-extrabold leading-tight text-[#092957] sm:text-4xl lg:text-[40px]">
+        From Claim to{" "}
+        <span className="text-[#ed174c]">Cash</span>,{" "}
+        <span className="text-[#168be8]">Handled.</span>
+      </h2>
+
+      <p className="mt-4 max-w-[680px] text-sm font-medium leading-relaxed text-[#71839e] sm:text-base">
+        A complete revenue cycle workflow — eligibility, coding, claims,
+        denials, and patient billing — managed end to end for your practice.
+      </p>
+
+    </div>
+
+    <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+
+      {[
+        {
+          step: "01",
+          icon: Stethoscope,
+          iconBg: "bg-[#dff3ff]",
+          iconColor: "text-[#1598df]",
+          title: "Eligibility & Coding",
+          text: "We verify benefits before the visit and code encounters with ICD-10, CPT, and HCPCS accuracy.",
+        },
+        {
+          step: "02",
+          icon: FileCheck,
+          iconBg: "bg-[#f0e4ff]",
+          iconColor: "text-[#8b45d6]",
+          title: "Clean Claim Submission",
+          text: "Claims are scrubbed against payer rules, submitted electronically, and tracked until acknowledgment.",
+        },
+        {
+          step: "03",
+          icon: Clock3,
+          iconBg: "bg-[#ffe4ec]",
+          iconColor: "text-[#e52c5b]",
+          title: "Follow-up & Appeals",
+          text: "Denied or delayed claims are worked immediately with root-cause fixes so the same errors don’t repeat.",
+        },
+        {
+          step: "04",
+          icon: CreditCard,
+          iconBg: "bg-[#dcf7f4]",
+          iconColor: "text-[#14a7bd]",
+          title: "Payment Posting",
+          text: "ERA/EOB posting, patient statements, and AR recovery keep your books clean and cash flow predictable.",
+        },
+      ].map((item, index) => (
+        <div
+          key={item.step}
+          className="relative rounded-[24px] border border-[#e5eef7] bg-white/80 p-6 shadow-sm"
+        >
+          <div className="mb-5 flex items-center justify-between">
+            <div className={`flex h-12 w-12 items-center justify-center rounded-full ${item.iconBg}`}>
+              <item.icon size={22} strokeWidth={2} className={item.iconColor} />
+            </div>
+            <span className="text-3xl font-extrabold text-[#ed174c]/20">{item.step}</span>
+          </div>
+
+          <h3 className="text-lg font-bold text-[#142957]">{item.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[#71839e]">{item.text}</p>
+
+          {index < 3 && (
+            <div className="absolute right-[-14px] top-1/2 z-10 hidden -translate-y-1/2 text-[#78bce9] xl:block">
+              <ArrowRight size={20} strokeWidth={1.8} />
+            </div>
+          )}
+        </div>
+      ))}
+
+    </div>
+
+    <div className="mt-10 flex flex-col items-center justify-between gap-5 rounded-[24px] border border-[#dcebf7] bg-white/60 px-6 py-6 sm:flex-row sm:px-8">
+      <div className="flex items-start gap-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#ed174c]">
+          <CheckCircle2 size={24} className="text-white" />
+        </div>
+        <div>
+          <h3 className="text-lg font-bold text-[#142957]">
+            Ready to recover lost revenue?
+          </h3>
+          <p className="mt-1 text-sm text-[#71839e]">
+            We’ll review your current claims, denials, and AR — then show you
+            exactly where money is leaking.
+          </p>
+        </div>
+      </div>
+
+      <button className="flex shrink-0 items-center gap-2 rounded-full bg-[#ed174c] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#d91243]">
+        Get a Billing Audit
+        <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
+          <ArrowRight size={15} strokeWidth={2} className="text-[#ed174c]" />
+        </span>
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+
+{/* =====================================================
+    TESTIMONIALS SECTION
+====================================================== */}
+
+<section className="relative w-full overflow-hidden bg-[#f4faff] px-4 pb-20 pt-4">
+
   <div className="pointer-events-none absolute inset-0 z-0">
     <div className="absolute left-[-180px] top-[80px] h-[420px] w-[420px] rounded-full bg-[#dff2ff] blur-[100px]" />
-    <div className="absolute right-[-180px] bottom-[-100px] h-[420px] w-[420px] rounded-full bg-[#e8f5ff] blur-[100px]" />
+    <div className="absolute right-[-180px] bottom-[-80px] h-[420px] w-[420px] rounded-full bg-[#e8f5ff] blur-[100px]" />
   </div>
 
-  <div className="relative z-10 mx-auto max-w-[1400px] px-5 py-16 sm:px-8 lg:px-12">
+  <div className="relative z-10 mx-auto max-w-[1320px]">
 
-    <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+    <div className="flex flex-col items-center text-center">
 
-      {/* Brand */}
-      <div className="max-w-[330px]">
-
-        <h2 className="text-3xl font-extrabold tracking-tight">
-          <span className="text-[#ed174c]">Med</span>{" "}
-          <span className="text-[#168be8]">Heave</span>
-        </h2>
-
-        <h4 className="mt-4 text-sm font-semibold uppercase tracking-[3px] text-[#168be8]">
-          Smarter Healthcare. Better Outcomes.
-        </h4>
-
-        <p className="mt-5 text-sm leading-7 text-[#52708c]">
-          Empowering healthcare providers with reliable medical billing,
-          revenue cycle management, and technology-driven solutions that
-          simplify operations and improve financial performance.
-        </p>
-
-        {/* Social Links */}
-        <div className="mt-7 flex items-center gap-3">
-
-          <a
-            href="#"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c8e2f5] text-[#168be8] transition hover:bg-[#ed174c] hover:text-white"
-          >
-            <FaFacebookF size={16} />
-          </a>
-
-          <a
-            href="#"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c8e2f5] text-[#168be8] transition hover:bg-[#168be8] hover:text-white"
-          >
-            <FaLinkedinIn size={16} />
-          </a>
-
-          <a
-            href="#"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c8e2f5] text-[#168be8] transition hover:bg-[#ed174c] hover:text-white"
-          >
-            <FaYoutube size={16} />
-          </a>
-
-          <a
-            href="#"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c8e2f5] text-[#168be8] transition hover:bg-[#168be8] hover:text-white"
-          >
-            <FaXTwitter size={16} />
-          </a>
-
-        </div>
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#eee5ff] to-[#e4f3ff] px-4 py-2">
+        <Quote size={17} strokeWidth={2} className="text-[#8b4ed8]" />
+        <span className="text-sm font-semibold text-[#3675c8]">
+          Testimonials
+        </span>
       </div>
 
+      <h2 className="text-3xl font-extrabold leading-tight text-[#092957] sm:text-4xl lg:text-[40px]">
+        Trusted by Practices
+        <br />
+        That Care About{" "}
+        <span className="text-[#ed174c]">Revenue</span>.
+      </h2>
 
-      {/* Quick Links */}
-      <div>
+      <p className="mt-4 max-w-[640px] text-sm font-medium leading-relaxed text-[#71839e] sm:text-base">
+        Clinic owners and administrators tell us the same thing: fewer
+        denials, faster payments, and a billing partner they can actually reach.
+      </p>
 
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#168be8] shadow-sm">
-            <ArrowUpRight size={18} />
+    </div>
+
+    <div className="mt-12 grid grid-cols-1 gap-5 lg:grid-cols-3">
+
+      {[
+        {
+          quote:
+            "Our denial rate dropped within the first 60 days. Med Heave cleaned up coding issues we didn’t even know we had, and collections are finally predictable.",
+          name: "Dr. Sarah Mitchell",
+          role: "Family Medicine, Austin TX",
+          initials: "SM",
+          accent: "bg-[#ffe4ec] text-[#ed174c]",
+        },
+        {
+          quote:
+            "Days in A/R used to sit above 45. Their team posts payments same-day and works follow-ups relentlessly. I spend my time with patients, not payers.",
+          name: "James Chen",
+          role: "Practice Administrator, Cardiology",
+          initials: "JC",
+          accent: "bg-[#dff3ff] text-[#168be8]",
+        },
+        {
+          quote:
+            "Credentialing and prior auths used to stall our schedule. Now both move quickly, claims go out clean, and parents aren’t waiting on surprise bills.",
+          name: "Dr. Priya Patel",
+          role: "Pediatrics, Orlando FL",
+          initials: "PP",
+          accent: "bg-[#f0e4ff] text-[#8b45d6]",
+        },
+      ].map((item) => (
+        <article
+          key={item.name}
+          className="flex h-full flex-col rounded-[24px] border border-[#e5eef7] bg-white/80 p-7 shadow-sm"
+        >
+          <div className="mb-5 flex items-center justify-between">
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[#fff7fa] to-[#e4f3ff]">
+              <Quote size={18} className="text-[#168be8]" />
+            </div>
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  size={15}
+                  className="fill-[#ed174c] text-[#ed174c]"
+                />
+              ))}
+            </div>
           </div>
 
-          <h3 className="text-lg font-bold text-[#0b3b66]">
-            Quick Links
-          </h3>
-        </div>
+          <p className="flex-1 text-sm leading-7 text-[#52708c]">
+            “{item.quote}”
+          </p>
 
-        <ul className="space-y-4 text-sm text-[#52708c]">
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Home</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">About Us</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Our Services</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Why Choose Us</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Contact Us</a>
-          </li>
-        </ul>
+          <div className="mt-6 flex items-center gap-3 border-t border-[#e5eef7] pt-5">
+            <div className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold ${item.accent}`}>
+              {item.initials}
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-[#142957]">{item.name}</h4>
+              <p className="text-xs text-[#71839e]">{item.role}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+{/* =====================================================
+    CONTACT / SUBMISSION FORM
+====================================================== */}
+
+<section id="contact" className="relative w-full overflow-hidden bg-[#f4faff] px-4 pb-20 pt-4">
+
+  <div className="pointer-events-none absolute inset-0 z-0">
+    <div className="absolute left-[-180px] top-[40px] h-[420px] w-[420px] rounded-full bg-[#dff2ff] blur-[100px]" />
+    <div className="absolute right-[-160px] bottom-[-80px] h-[380px] w-[380px] rounded-full bg-[#ffe8ef] blur-[110px]" />
+  </div>
+
+  <div className="relative z-10 mx-auto max-w-[1320px]">
+
+    <div className="flex flex-col items-center text-center">
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#eee5ff] to-[#e4f3ff] px-4 py-2">
+        <Mail size={17} strokeWidth={2} className="text-[#8b4ed8]" />
+        <span className="text-sm font-semibold text-[#3675c8]">
+          Get In Touch
+        </span>
+      </div>
+
+      <h2 className="text-3xl font-extrabold leading-tight text-[#092957] sm:text-4xl lg:text-[40px]">
+        Tell Us About Your{" "}
+        <span className="text-[#ed174c]">Practice</span>.
+      </h2>
+
+      <p className="mt-4 max-w-[640px] text-sm font-medium leading-relaxed text-[#71839e] sm:text-base">
+        Share your billing needs and we’ll follow up at{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`} className="font-semibold text-[#168be8]">
+          {CONTACT_EMAIL}
+        </a>
+        . No call centers — a real billing team replies.
+      </p>
+    </div>
+
+    <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-[0.9fr_1.4fr]">
+
+      <div className="flex flex-col gap-4">
+
+        <a
+          href={CONTACT_PHONE_HREF}
+          className="rounded-[24px] border border-[#e5eef7] bg-white/80 p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+        >
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#dff3ff]">
+            <Phone size={22} className="text-[#1598df]" />
+          </div>
+          <h3 className="text-lg font-bold text-[#142957]">Call Us</h3>
+          <p className="mt-1 text-sm text-[#71839e]">Mon–Fri, 9am–6pm EST</p>
+          <p className="mt-3 text-base font-semibold text-[#168be8]">
+            {CONTACT_PHONE}
+          </p>
+        </a>
+
+        <a
+          href={`mailto:${CONTACT_EMAIL}`}
+          className="rounded-[24px] border border-[#e5eef7] bg-white/80 p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+        >
+          <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[#ffe4ec]">
+            <Mail size={22} className="text-[#e52c5b]" />
+          </div>
+          <h3 className="text-lg font-bold text-[#142957]">Email Us</h3>
+          <p className="mt-1 text-sm text-[#71839e]">We reply within one business day</p>
+          <p className="mt-3 text-base font-semibold text-[#168be8]">
+            {CONTACT_EMAIL}
+          </p>
+        </a>
+
+        <div className="rounded-[24px] border border-[#e5eef7] bg-gradient-to-r from-[#fff7fa] to-[#f5fbff] p-6">
+          <h3 className="text-lg font-bold text-[#142957]">What happens next</h3>
+          <ul className="mt-3 space-y-2 text-sm text-[#71839e]">
+            <li className="flex items-start gap-2">
+              <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#ed174c]" />
+              Your form goes straight to {CONTACT_EMAIL}
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#ed174c]" />
+              We review claims, denials, and current AR
+            </li>
+            <li className="flex items-start gap-2">
+              <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-[#ed174c]" />
+              You get a clear next-step plan for your practice
+            </li>
+          </ul>
+        </div>
 
       </div>
 
+      <form
+        onSubmit={handleFormSubmit}
+        className="rounded-[24px] border border-[#e5eef7] bg-white/85 p-6 shadow-sm sm:p-8"
+      >
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
-      {/* Our Services */}
-      <div>
+          <label className="block text-left">
+            <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#142957]">
+              <User size={15} className="text-[#168be8]" />
+              Full name
+            </span>
+            <input
+              type="text"
+              name="name"
+              required
+              value={formData.name}
+              onChange={handleFormChange}
+              placeholder="Dr. Jane Smith"
+              className="w-full rounded-2xl border border-[#dcebf7] bg-white px-4 py-3 text-sm text-[#142957] outline-none transition placeholder:text-[#9bb0c4] focus:border-[#168be8] focus:ring-2 focus:ring-[#168be8]/20"
+            />
+          </label>
 
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#168be8] shadow-sm">
-            <HeartPulse size={18} />
-          </div>
+          <label className="block text-left">
+            <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#142957]">
+              <Mail size={15} className="text-[#168be8]" />
+              Email
+            </span>
+            <input
+              type="email"
+              name="email"
+              required
+              value={formData.email}
+              onChange={handleFormChange}
+              placeholder="you@practice.com"
+              className="w-full rounded-2xl border border-[#dcebf7] bg-white px-4 py-3 text-sm text-[#142957] outline-none transition placeholder:text-[#9bb0c4] focus:border-[#168be8] focus:ring-2 focus:ring-[#168be8]/20"
+            />
+          </label>
 
-          <h3 className="text-lg font-bold text-[#0b3b66]">
-            Our Services
-          </h3>
+          <label className="block text-left">
+            <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#142957]">
+              <Phone size={15} className="text-[#168be8]" />
+              Phone
+            </span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              value={formData.phone}
+              onChange={handleFormChange}
+              placeholder="+1 850-470-1312"
+              className="w-full rounded-2xl border border-[#dcebf7] bg-white px-4 py-3 text-sm text-[#142957] outline-none transition placeholder:text-[#9bb0c4] focus:border-[#168be8] focus:ring-2 focus:ring-[#168be8]/20"
+            />
+          </label>
+
+          <label className="block text-left">
+            <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#142957]">
+              <Building2 size={15} className="text-[#168be8]" />
+              Practice name
+            </span>
+            <input
+              type="text"
+              name="practice"
+              required
+              value={formData.practice}
+              onChange={handleFormChange}
+              placeholder="Your clinic or group"
+              className="w-full rounded-2xl border border-[#dcebf7] bg-white px-4 py-3 text-sm text-[#142957] outline-none transition placeholder:text-[#9bb0c4] focus:border-[#168be8] focus:ring-2 focus:ring-[#168be8]/20"
+            />
+          </label>
+
         </div>
 
-        <ul className="space-y-4 text-sm text-[#52708c]">
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Medical Billing</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Medical Coding</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Credentialing</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">Denial Management</a>
-          </li>
-          <li>
-            <a href="#" className="transition hover:text-[#168be8]">
-              Revenue Cycle Management
-            </a>
-          </li>
-        </ul>
-
-      </div>
-
-
-      {/* Get In Touch */}
-      <div>
-
-        <div className="mb-6 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#168be8] shadow-sm">
-            <Mail size={18} />
-          </div>
-
-          <h3 className="text-lg font-bold text-[#0b3b66]">
-            Get In Touch
-          </h3>
-        </div>
-
-        <p className="text-sm leading-7 text-[#52708c]">
-          Your partner in{" "}
-          <span className="font-semibold text-[#ed174c]">
-            healthcare success.
+        <label className="mt-4 block text-left">
+          <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#142957]">
+            <ClipboardCheck size={15} className="text-[#168be8]" />
+            Service needed
           </span>
-        </p>
+          <select
+            name="service"
+            value={formData.service}
+            onChange={handleFormChange}
+            className="w-full rounded-2xl border border-[#dcebf7] bg-white px-4 py-3 text-sm text-[#142957] outline-none transition focus:border-[#168be8] focus:ring-2 focus:ring-[#168be8]/20"
+          >
+            <option>Medical Billing</option>
+            <option>Medical Coding</option>
+            <option>Revenue Cycle Management</option>
+            <option>Denial Management</option>
+            <option>Credentialing</option>
+            <option>Prior Authorization</option>
+            <option>Other</option>
+          </select>
+        </label>
 
-        <div className="mt-6 space-y-4 text-sm text-[#52708c]">
+        <label className="mt-4 block text-left">
+          <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[#142957]">
+            <FileText size={15} className="text-[#168be8]" />
+            Message
+          </span>
+          <textarea
+            name="message"
+            required
+            rows={5}
+            value={formData.message}
+            onChange={handleFormChange}
+            placeholder="Tell us about your specialty, claim volume, and what you need help with."
+            className="w-full resize-none rounded-2xl border border-[#dcebf7] bg-white px-4 py-3 text-sm leading-6 text-[#142957] outline-none transition placeholder:text-[#9bb0c4] focus:border-[#168be8] focus:ring-2 focus:ring-[#168be8]/20"
+          />
+        </label>
 
-          <div className="flex items-start gap-3">
-            <MapPin
-              size={17}
-              className="mt-1 shrink-0 text-[#168be8]"
-            />
-            <span>Serving healthcare providers worldwide</span>
-          </div>
+        {formStatus === "success" && (
+          <p className="mt-4 rounded-2xl bg-[#e7f8f2] px-4 py-3 text-sm font-medium text-[#0f8a6a]">
+            Message sent. We’ll reply to you from {CONTACT_EMAIL}.
+          </p>
+        )}
 
-          <div className="flex items-center gap-3">
-            <Mail
-              size={17}
-              className="shrink-0 text-[#168be8]"
-            />
-            <span>info@medheave.com</span>
-          </div>
+        {formStatus === "error" && (
+          <p className="mt-4 rounded-2xl bg-[#ffe8ee] px-4 py-3 text-sm font-medium text-[#ed174c]">
+            {formError} You can also email us directly at {CONTACT_EMAIL}.
+          </p>
+        )}
 
-          <div className="flex items-center gap-3">
-            <Phone
-              size={17}
-              className="shrink-0 text-[#168be8]"
-            />
-            <span>+1 (000) 000-0000</span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    {/* Bottom Footer */}
-    <div className="mt-14 border-t border-[#cfe5f5] pt-6">
-
-      <div className="flex flex-col justify-between gap-4 text-xs text-[#6c879f] sm:flex-row">
-
-        <p>
-          © 2026 Med Heave. All rights reserved.
-        </p>
-
-        <div className="flex gap-6">
-          <a href="#" className="transition hover:text-[#168be8]">
-            Privacy Policy
-          </a>
-
-          <a href="#" className="transition hover:text-[#168be8]">
-            Terms & Conditions
-          </a>
-        </div>
-
-      </div>
+        <button
+          type="submit"
+          disabled={formStatus === "sending"}
+          className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[#ed174c] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#d91243] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-7"
+        >
+          {formStatus === "sending" ? "Sending..." : "Send Message"}
+          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white">
+            <Send size={14} strokeWidth={2} className="text-[#ed174c]" />
+          </span>
+        </button>
+      </form>
 
     </div>
 
   </div>
 
-</footer>
+</section>
+
+
+
+<Footer />
 
 
 
