@@ -37,7 +37,7 @@ import {
 const hipaaIcon = "/images/hipaa-icon.png";
 const reimbursementsIcon = "/images/reimbursements-icon.png";
 const revenueCycleIcon = "/images/revenue-cycle-icon.png";
-const medheaveMain = "/images/medheave_main.png";
+const heroMain = "/images/nextmbs_main.png";
 const heroBg = "/images/hero-bg.png";
 const ourImpact = "/images/secondimage.png";
 const leftImage = "/images/lefticon.png";
@@ -256,7 +256,7 @@ const MainScreen = () => {
         <div className="w-full lg:w-1/2 flex justify-center items-center mt-10 lg:mt-0">
 
           <img
-            src={medheaveMain}
+            src={heroMain}
             alt="Medical billing dashboard"
             className="w-full max-w-[550px] h-auto object-contain"
           />
@@ -1322,7 +1322,7 @@ const MainScreen = () => {
       {[
         {
           quote:
-            "Our denial rate dropped within the first 60 days. Med Heave cleaned up coding issues we didn’t even know we had, and collections are finally predictable.",
+            "Our denial rate dropped within the first 60 days. NEXTMBS cleaned up coding issues we didn’t even know we had, and collections are finally predictable.",
           name: "Dr. Sarah Mitchell",
           role: "Family Medicine, Austin TX",
           initials: "SM",

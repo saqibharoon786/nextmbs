@@ -93,6 +93,16 @@ const Footer = () => {
               <li>
                 <Link href="/#contact" className="transition hover:text-[#168be8]">Contact Us</Link>
               </li>
+              <li>
+                <Link href="/privacy-policy" className="transition hover:text-[#168be8]">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="transition hover:text-[#168be8]">
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -171,8 +181,12 @@ const Footer = () => {
           <div className="flex flex-col justify-between gap-4 text-xs text-[#6c879f] sm:flex-row">
             <p>© 2026 NEXTMBS. All rights reserved.</p>
             <div className="flex gap-6">
-              <a href="#" className="transition hover:text-[#168be8]">Privacy Policy</a>
-              <a href="#" className="transition hover:text-[#168be8]">Terms & Conditions</a>
+              <Link href="/privacy-policy" className="transition hover:text-[#168be8]">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="transition hover:text-[#168be8]">
+                Terms & Conditions
+              </Link>
             </div>
           </div>
         </div>

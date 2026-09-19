@@ -1271,7 +1271,7 @@ const Navbar = () => {
       <div className="mb-5 px-2">
 
         <h3 className="text-lg font-bold text-blue-950">
-          About Med-Heave
+          About NEXTMBS
         </h3>
 
         <p className="text-sm text-gray-500 mt-1">
@@ -1311,7 +1311,7 @@ const Navbar = () => {
             </h4>
 
             <p className="text-xs text-gray-500">
-              Learn about Med-Heave and what we do
+              Learn about NEXTMBS and what we do
             </p>
           </div>
 
@@ -1377,14 +1377,14 @@ const Navbar = () => {
             </h4>
 
             <p className="text-xs text-gray-500">
-              Meet the people behind Med-Heave
+              Meet the people behind NEXTMBS
             </p>
           </div>
 
         </a>
 
 
-        {/* Why Med-Heave */}
+        {/* Why NEXTMBS */}
         <a
           href="#why-us"
           className="
@@ -1406,7 +1406,7 @@ const Navbar = () => {
 
           <div>
             <h4 className="font-semibold text-blue-950 text-sm">
-              Why Med-Heave
+              Why NEXTMBS
             </h4>
 
             <p className="text-xs text-gray-500">
@@ -1587,7 +1587,7 @@ const Navbar = () => {
           </h4>
 
           <p className="text-xs text-gray-500">
-            See how Med-Heave can help your practice
+            See how NEXTMBS can help your practice
           </p>
         </div>
       </Link>
